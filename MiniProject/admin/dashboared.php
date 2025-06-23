@@ -19,9 +19,6 @@ $stmtTerrains = $con->prepare("SELECT * FROM terrains_");
 $stmtTerrains->execute();
 $terrains = $stmtTerrains->fetchAll(PDO::FETCH_OBJ);
 
-if(isset($_POST["kk"])){
-    print_r($_POST["kk"]);
-}
 
 
 ?>
@@ -103,10 +100,13 @@ if(isset($_POST["kk"])){
                             echo "<td>$terrain->nom</td>";
                         }
                     }
-                    echo "<td>".date('Y-m-d', strtotime($res->date))."</td>";
+                    echo "<td>" . date('Y-m-d', strtotime($res->date)) . "</td>";
                     echo "<td>$res->heure_debut</td>";
                     echo "<td>$res->heure_fin</td>";
-                    echo "<td><form method='post'><button value='$res->id' name='kk'>Approve</button><button>Decline</button></form></td>";
+                    echo '<td>
+                            <a href="approve?id=' . $res->id . '">approve</a>
+                            <a href="#">decline</a>
+                        </td>';;
                     echo "</tr>";
                 }
                 ?>
