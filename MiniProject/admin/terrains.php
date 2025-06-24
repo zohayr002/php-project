@@ -70,7 +70,7 @@ $sports = $statement->fetchAll(PDO::FETCH_OBJ);
         </div>
         <button type="submit">Send</button>
     </form>
-    <a href="dashboared.php">dashboared</a>
+    <a href="dashboard.php">dashboard</a>
 
 </body>
 

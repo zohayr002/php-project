@@ -30,7 +30,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         echo "Inscription réussie.";
         $_SESSION["email"] = $email;
         $_SESSION["role"] = $role;
-        header("Location: ../admin/dashboared.php");
+        header("Location: ../admin/dashboard.php");
     } else {
         echo "Erreur lors de l'inscription.";
     }
