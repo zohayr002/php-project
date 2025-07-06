@@ -1,7 +1,9 @@
 <?php
 include "../connect.php";
-
 include "../auth/authAdmin.php";
+
+
+
 
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -13,17 +15,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     $statement = $con->prepare("INSERT INTO sports_(nom) VALUES (:nom)");
     $statement->bindParam('nom', $nom);
-    if ($statement->execute()) {
-        echo "data added successfly";
-    } else {
-        echo "data added UNsuccessfly";
-    }
+    $statement->execute();
 }
-
-
-
 ?>
-
 
 <!DOCTYPE html>
 <html lang="en">
@@ -32,46 +26,106 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link rel="stylesheet" href="../css/main.css">
     <link rel="stylesheet" href="../css/tableaux.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha512-..." crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <style>
+        .tabs>:nth-child(4) .hover {
+            background-color: #9696ef0a;
+
+            &> :first-child:hover {
+                background-color: unset;
+            }
+        }
+
+        .tabs>:nth-child(4) .hover::after {
+            content: "";
+            position: absolute;
+            background: var(--primary);
+            width: 4px;
+            height: 100%;
+            left: 2px;
+            border-radius: 50px;
+        }
+
+        input[type="submit"] {
+            margin-top: 18px;
+        }
+    </style>
 </head>
 
 <body>
-    <h1>ajouter Sport</h1>
-    <form action="" method="post">
-        <label for="">name</label>
-        <input type="text" name="nom">
-        <input type="submit" value="Send">
-    </form>
-
-    <h3>sports:</h3>
-    <table style="width: 45%;" class="modern-table">
-        <thead>
-            <tr>
-                <th>Sport name</th>
-                <th>action</th>
-            </tr>
-        </thead>
-        <tbody>
+    <div class="con">
+        <div class="left">
+            <?php include "../navbar/navAdmin.php" ?>
+        </div>
+        <div class="right">
             <?php
-            $sports = $con->prepare("SELECT * FROM sports_");
-            $sports->execute();
-            $sports = $sports->fetchAll(PDO::FETCH_OBJ);
-            foreach ($sports as $sport) {
-                echo "<tr>
-                <td>$sport->nom</td>
-                <td>
-                    <a href=\"gere.php?statu=modifier&&id=$sport->id \">Modifier</a>
-                    <a href=\"gere.php?statu=suprimer&&id=$sport->id \">Supprimer</a>
-                </td>
-            </tr>";
+            if (isset($_GET['error']) && $_GET['error'] === 'sport_linked') {
+                echo "❌ Vous ne pouvez pas supprimer ce sport car il est lié à un terrain ou une réservation existante.";
+            }
+
+            if (isset($_GET['msg']) && $_GET['msg'] === 'deleted') {
+                echo "<div class='success'>✅ Sport supprimé avec succès.</div>";
             }
             ?>
+            <h1>Sports</h1>
 
-        </tbody>
-    </table>
+            <table style="width: 45%;" class="modern-table">
+                <thead>
+                    <tr>
+                        <th>Sport name</th>
+                        <th>action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php
+                    $sports = $con->prepare("SELECT * FROM sports_");
+                    $sports->execute();
+                    $sports = $sports->fetchAll(PDO::FETCH_OBJ);
+                    foreach ($sports as $sport) {
+                        echo "<tr>
+                                <td>$sport->nom</td>
+                                <td>
+                                    <a href=\"#\" onclick=\"modifySport($sport->id,'" . $sport->nom . "')\">Modifier</a>
+                                    <a href=\"gereSport.php?statu=suprimer&id=$sport->id \">Supprimer</a>
+                                </td>
+                            </tr>";
+                    }
+                    ?>
 
-
-    <a href="dashboard.php">dashboared</a>
+                </tbody>
+            </table>
+            <h3>Ajouter un sport</h3>
+            <form action="" method="post">
+                <div class="con-Input">
+                    <label for="name">Nom:</label>
+                    <input id="name" type="text" name="nom" placeholder="Entrer le nom...">
+                </div>
+                <input type="submit" value="Send">
+            </form>
+        </div>
+    </div>
+    <script>
+        function modifySport(id, currentName) {
+            const newName = prompt("Entrez le nouveau nom du sport:", currentName);
+            if (!newName || newName.trim() === "") return;
+            fetch('gereSport.php', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded'
+                    },
+                    body: `id=${encodeURIComponent(id)}&nom=${encodeURIComponent(newName)}`
+                })
+                .then(respone => respone.text())
+                .then(result => {
+                    location.reload();
+                })
+                .catch(error => {
+                    console.log(error)
+                })
+        }
+    </script>
 </body>
 
 </html>

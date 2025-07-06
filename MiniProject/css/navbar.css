@@ -1,0 +1,9 @@
+.navBarCon {
+    background: rgb(34, 32, 32);
+    height: 50px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 5px 23px;
+    border-radius: 7px;
+}

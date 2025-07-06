@@ -25,13 +25,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     if ($user && password_verify($password, $user->password_hash)) {
         $_SESSION["email"] = $email;
+        $_SESSION["user_id"] = $user->id;
         $_SESSION["role"] = $user->role;
         if ($user->role == "admin") {
             header("Location: ../admin/dashboard.php");
-            exit;
+            exit();
         } else {
             header("Location: ../client/reservation.php");
-            exit;
+            exit();
         }
     } else {
         echo "email ou mot de passe incorrects";
@@ -61,6 +62,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <input type="text" name="password">
         </div>
         <button type="submit">Send</button>
+        <a href="registerClient.php">register</a>
     </form>
 </body>
 

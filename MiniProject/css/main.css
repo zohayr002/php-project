@@ -1,0 +1,116 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Poppins", sans-serif;
+}
+
+:root {
+    --primary: #2196f3;
+    --secondary: #7d8da1;
+
+    --primaryFont: #363949;
+
+    --hover: #f7f7f7;
+}
+
+body {
+    background: #f6f6f9;
+}
+a {
+    color: black;
+    text-decoration: none;
+}
+.con {
+    display: flex;
+    width: 100%;
+    height: 100vh;
+}
+.left {
+    background: white;
+    width: 22%;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 1px 1px 7px -1px #e1e1e1;
+}
+.right {
+    width: 78%;
+    padding-inline: 20px;
+    padding-top: 20px;
+}
+.tabs {
+    margin-top: 50px;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+form {
+    display: flex;
+    align-items: center;
+    gap: 11px;
+}
+.hover {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 5px;
+    position: relative;
+}
+.tab {
+    border-radius: 13px;
+    width: 92%;
+    height: 45px;
+    display: flex;
+    gap: 13px;
+    align-items: center;
+    padding-left: 15px;
+    font-size: 19px;
+    color: var(--secondary);
+    cursor: pointer;
+    &:hover {
+        background-color: var(--hover);
+        transition: 0.4s;
+    }
+}
+.tabs > :last-child {
+    margin-top: auto;
+    & .tab {
+        color: rgb(231 51 51) !important;
+        &:hover {
+            background-color: rgb(255 233 233);
+            transition: 0.4s;
+        }
+    }
+}
+.con-Input {
+    display: flex;
+    flex-direction: column;
+}
+label {
+    color: var(--primaryFont);
+    font-weight: bold;
+}
+h3 {
+    margin-block: 16px;
+}
+
+input[type="text"],
+select,
+.date {
+    border: none;
+    height: 39px;
+    width: 200px;
+    border-radius: 10px;
+    padding: 8px;
+    outline: none;
+    margin-block: 5px;
+}
+input[type="submit"] {
+    background: var(--primary);
+    color: white;
+    border: none;
+    height: 39px;
+    border-radius: 6px;
+    width: 87px;
+    cursor: pointer;
+}

@@ -6,6 +6,7 @@
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
     overflow: hidden;
     border-radius: 8px;
+    background: white;
 }
 
 .modern-table thead {
@@ -20,9 +21,6 @@
     text-align: center;
 }
 
-.modern-table tbody tr:nth-child(even) {
-    background-color: #f7f9fc;
-}
 
 .modern-table tbody tr:hover {
     background-color: #e1ecf7;

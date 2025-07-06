@@ -1,5 +1,6 @@
 <?php
 include "../connect.php";
+include "../navbar/navAdmin.php";
 
 $newStatu = $_GET["statut"];
 $idReservation = $_GET["id"];
